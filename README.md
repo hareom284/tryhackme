@@ -28,7 +28,8 @@ This approach helps me maintain consistent, well-organized documentation while r
 ```
 tryhackme/
 ├── December/          # Monthly organized notes
-│   └── 001_Intro_LAN.md
+│   ├── 001_Intro_LAN.md
+│   └── 002_Intro_OSI Model.md
 ├── README.md
 └── ...
 ```
@@ -42,6 +43,12 @@ Notes are organized by month to track my learning progression over time.
   - LAN Topologies (Bus, Star, Ring, Mesh, Tree, Hybrid)
   - Network Devices (Switch, Router)
   - Key Protocols (Subnetting, ARP, DHCP)
+
+- [**002 - OSI Model**](December/002_Intro_OSI%20Model.md)
+  - 7 Layers Explained (Application to Physical)
+  - Encapsulation & De-encapsulation Process
+  - TCP vs UDP Comparison
+  - Real-world Examples & Troubleshooting
 
 ### Coming Soon
 More topics will be added as I continue my learning journey...
