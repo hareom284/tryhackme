@@ -29,7 +29,10 @@ This approach helps me maintain consistent, well-organized documentation while r
 tryhackme/
 ├── December/          # Monthly organized notes
 │   ├── 001_Intro_LAN.md
-│   └── 002_Intro_OSI Model.md
+│   ├── 002_Intro_OSI Model.md
+│   ├── 003_Intro_Packets_and_Frames.md
+│   ├── 004_Introduction to Port Forwarding.md
+│   └── 005_Intro_DNS_In_Details.md
 ├── README.md
 └── ...
 ```
@@ -49,6 +52,27 @@ Notes are organized by month to track my learning progression over time.
   - Encapsulation & De-encapsulation Process
   - TCP vs UDP Comparison
   - Real-world Examples & Troubleshooting
+
+- [**003 - Introduction to Packets and Frames**](December/003_Intro_Packets_and_Frames.md)
+  - Understanding Network Packets
+  - Frame Structure and Components
+  - Packet Headers and Payload
+  - Network Communication Flow
+
+- [**004 - Introduction to Port Forwarding**](December/004_Introduction%20to%20Port%20Forwarding.md)
+  - Port Forwarding Fundamentals
+  - NAT and Port Mapping
+  - Common Use Cases
+  - Security Considerations
+
+- [**005 - Introduction to DNS In Details**](December/005_Intro_DNS_In_Details.md)
+  - DNS Fundamentals and Hierarchy
+  - DNS Record Types (A, AAAA, CNAME, MX, TXT, NS, SOA, PTR)
+  - DNS Resolution Process
+  - DNS Server Types (Recursive, Root, TLD, Authoritative)
+  - DNS Security (DNSSEC, Spoofing, Cache Poisoning)
+  - DNS Tools (dig, nslookup, DNS enumeration)
+  - Penetration Testing Techniques
 
 ### Coming Soon
 More topics will be added as I continue my learning journey...
