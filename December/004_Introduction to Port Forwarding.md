@@ -26,8 +26,8 @@ Due to **Network Address Translation (NAT)**, devices on the internet cannot dir
 
 ```
 Internet (Public)          Router (NAT)         Home Network (Private)
-                              
-Anyone outside     ê    Can't reach    ê    192.168.1.100:22 (SSH server)
+                              
+Anyone outside     ?    Can't reach    ?    192.168.1.100:22 (SSH server)
 ```
 
 **Why this happens:**
@@ -42,9 +42,9 @@ Port forwarding creates a **mapping** that tells the router where to send incomi
 ```
 Internet                   Router                 Internal Network
                        (203.0.113.5)
-                           
-External request    í  Port Forward Rule  í   192.168.1.100:22
-to port 2222              2222 í 22
+                           
+External request    ?  Port Forward Rule  ?   192.168.1.100:22
+to port 2222              2222 ? 22
 ```
 
 ### Port Forwarding Rule Anatomy
@@ -63,7 +63,7 @@ Internal IP: 192.168.1.100
 Internal Port: 22
 Protocol: TCP
 
-Complete Rule: 203.0.113.5:2222 í 192.168.1.100:22
+Complete Rule: 203.0.113.5:2222 ? 192.168.1.100:22
 ```
 
 **How to use it:**
@@ -84,7 +84,7 @@ ssh user@203.0.113.5 -p 2222
 External: yourpublicip.com:8080
 Internal: 192.168.1.50:80
 
-Rule: 8080 (TCP) í 192.168.1.50:80
+Rule: 8080 (TCP) ? 192.168.1.50:80
 ```
 
 **Access from internet:**
@@ -97,7 +97,7 @@ http://203.0.113.5:8080
 External: yourpublicip:25565
 Internal: 192.168.1.25:25565
 
-Rule: 25565 (TCP) í 192.168.1.25:25565
+Rule: 25565 (TCP) ? 192.168.1.25:25565
 ```
 
 **Players connect with:**
@@ -110,7 +110,7 @@ Rule: 25565 (TCP) í 192.168.1.25:25565
 External: yourpublicip:8081
 Internal: 192.168.1.200:80
 
-Rule: 8081 (TCP) í 192.168.1.200:80
+Rule: 8081 (TCP) ? 192.168.1.200:80
 ```
 
 #### 4. **Remote Desktop (RDP)**
@@ -118,7 +118,7 @@ Rule: 8081 (TCP) í 192.168.1.200:80
 External: yourpublicip:3390
 Internal: 192.168.1.10:3389
 
-Rule: 3390 (TCP) í 192.168.1.10:3389
+Rule: 3390 (TCP) ? 192.168.1.10:3389
 ```
 
 **Why use 3390 instead of 3389?**
@@ -128,9 +128,9 @@ Rule: 3390 (TCP) í 192.168.1.10:3389
 
 #### 5. **FTP Server**
 ```
-Control Channel: 21 (TCP) í 192.168.1.30:21
-Data Channel: 20 (TCP) í 192.168.1.30:20
-Passive Ports: 50000-50100 (TCP) í 192.168.1.30:50000-50100
+Control Channel: 21 (TCP) ? 192.168.1.30:21
+Data Channel: 20 (TCP) ? 192.168.1.30:20
+Passive Ports: 50000-50100 (TCP) ? 192.168.1.30:50000-50100
 ```
 
 ---
@@ -169,13 +169,13 @@ Passive Ports: 50000-50100 (TCP) í 192.168.1.30:50000-50100
 
 #### Setting Static IP (Important!)
 
-† **Always assign static IP to devices with port forwarding!**
+? **Always assign static IP to devices with port forwarding!**
 
 If your device's IP changes (via DHCP), port forwarding will break.
 
 **Method 1: DHCP Reservation (Recommended)**
 ```
-Router Settings í DHCP í Add Reservation
+Router Settings ? DHCP ? Add Reservation
 MAC Address: AA:BB:CC:DD:EE:FF
 Reserved IP: 192.168.1.100
 ```
@@ -219,19 +219,19 @@ ssh user@your-public-ip -p 2222
 
 #### Troubleshooting:
 ```
- Service running on internal device?
- Internal firewall allowing port?
- Router firewall allowing port?
- Port forwarding rule correct?
- Using correct public IP?
- ISP blocking the port?
+ Service running on internal device?
+ Internal firewall allowing port?
+ Router firewall allowing port?
+ Port forwarding rule correct?
+ Using correct public IP?
+ ISP blocking the port?
 ```
 
 ---
 
 ### Security Considerations
 
-#### † Dangers of Port Forwarding:
+#### ? Dangers of Port Forwarding:
 
 1. **Direct Internet Exposure**
    - Your device is directly accessible from the internet
@@ -249,12 +249,12 @@ ssh user@your-public-ip -p 2222
    - Unlike VPNs, port forwarding doesn't inspect or filter traffic
    - Malicious traffic goes straight to your device
 
-#### =· Port Forwarding Security Best Practices:
+#### =? Port Forwarding Security Best Practices:
 
 **1. Use Non-Standard Ports**
 ```
-L Bad:  External 22 í Internal 22 (SSH)
- Good: External 2222 í Internal 22 (SSH)
+L Bad:  External 22 ? Internal 22 (SSH)
+ Good: External 2222 ? Internal 22 (SSH)
 ```
 
 **2. Implement Strong Authentication**
@@ -291,8 +291,8 @@ sudo apt update && sudo apt upgrade
 
 **6. Use VPN Instead (When Possible)**
 ```
-Port Forwarding:  Internet í Service (Direct exposure)
-VPN:             Internet í VPN í Service (Encrypted tunnel)
+Port Forwarding:  Internet ? Service (Direct exposure)
+VPN:             Internet ? VPN ? Service (Encrypted tunnel)
 ```
 
 **7. Monitor Access Logs**
@@ -316,9 +316,9 @@ sudo apt install suricata
 
 | Feature | Port Forwarding | VPN |
 |---------|----------------|-----|
-| **Security** | † Low | = High (encrypted) |
+| **Security** | ? Low | = High (encrypted) |
 | **Setup Complexity** | Easy | Moderate |
-| **Traffic Encryption** | L No |  Yes |
+| **Traffic Encryption** | L No |  Yes |
 | **Access Control** | Port-based only | User authentication |
 | **Use Case** | Single service access | Full network access |
 | **Recommended For** | Quick public access | Secure remote access |
@@ -350,8 +350,8 @@ A **firewall** is a network security system that monitors and controls incoming 
 - Logs all activity
 
 ```
-Internet  í  [FIREWALL]  í  Your Network
-              ì
+Internet  ?  [FIREWALL]  ?  Your Network
+              ?
          Allow/Deny
          Based on Rules
 ```
@@ -360,8 +360,8 @@ Internet  í  [FIREWALL]  í  Your Network
 
 **Without Firewall:**
 ```
-Internet  í  Your Computer (All ports open)
-             ë
+Internet  ?  Your Computer (All ports open)
+             ?
          Vulnerable to:
          - Unauthorized access
          - Port scans
@@ -371,8 +371,8 @@ Internet  í  Your Computer (All ports open)
 
 **With Firewall:**
 ```
-Internet  í  [FIREWALL - Blocks unwanted]  í  Your Computer
-                  ì
+Internet  ?  [FIREWALL - Blocks unwanted]  ?  Your Computer
+                  ?
              Only allowed traffic passes
 ```
 
@@ -398,8 +398,8 @@ Dest: 192.168.1.10:22
 Protocol: TCP
 
 Firewall checks rules:
-Rule 1: Allow 192.168.1.0/24 í 192.168.1.10:22  (source doesn't match)
-Rule 2: Allow 203.0.113.0/24 í any:22  (MATCH - ALLOW)
+Rule 1: Allow 192.168.1.0/24 ? 192.168.1.10:22  (source doesn't match)
+Rule 2: Allow 203.0.113.0/24 ? any:22  (MATCH - ALLOW)
 
 Result: Packet allowed through
 ```
@@ -419,9 +419,9 @@ Inspects each packet **independently** based on:
 
 **Example Rules:**
 ```
-ALLOW: 192.168.1.0/24 í any, port 443, TCP
-DENY: any í 192.168.1.100, port 23, TCP
-ALLOW: any í any, port 53, UDP
+ALLOW: 192.168.1.0/24 ? any, port 443, TCP
+DENY: any ? 192.168.1.100, port 23, TCP
+ALLOW: any ? any, port 53, UDP
 ```
 
 **Advantages:**
@@ -436,8 +436,8 @@ ALLOW: any í any, port 53, UDP
 
 **Example: Stateless Rule Problem**
 ```
-Outbound: 192.168.1.10:54321 í 8.8.8.8:53 (DNS query)  Allowed
-Inbound:  8.8.8.8:53 í 192.168.1.10:54321 (DNS response)  Blocked!
+Outbound: 192.168.1.10:54321 ? 8.8.8.8:53 (DNS query)  Allowed
+Inbound:  8.8.8.8:53 ? 192.168.1.10:54321 (DNS response)  Blocked!
 
 Problem: Firewall doesn't know response is related to request
 ```
@@ -453,9 +453,9 @@ Tracks the **state of connections** and understands context.
 **Connection State Table:**
 ```
 Source IP:Port    Dest IP:Port      State       Protocol
-192.168.1.10:54321 í 8.8.8.8:53     ESTABLISHED   UDP
-192.168.1.10:54322 í 142.250.1.46:443 ESTABLISHED TCP
-192.168.1.11:54323 í 1.1.1.1:53     NEW           UDP
+192.168.1.10:54321 ? 8.8.8.8:53     ESTABLISHED   UDP
+192.168.1.10:54322 ? 142.250.1.46:443 ESTABLISHED TCP
+192.168.1.11:54323 ? 1.1.1.1:53     NEW           UDP
 ```
 
 **How it works:**
@@ -465,13 +465,13 @@ Source IP:Port    Dest IP:Port      State       Protocol
 
 **Example:**
 ```
-1. You: 192.168.1.10:54321 í 8.8.8.8:53 (DNS query)
+1. You: 192.168.1.10:54321 ? 8.8.8.8:53 (DNS query)
    Firewall: Creates state entry, allows packet
 
-2. Response: 8.8.8.8:53 í 192.168.1.10:54321
+2. Response: 8.8.8.8:53 ? 192.168.1.10:54321
    Firewall: Checks state table, finds matching entry, allows
 
-3. Random: 203.0.113.99:12345 í 192.168.1.10:22
+3. Random: 203.0.113.99:12345 ? 192.168.1.10:22
    Firewall: No state entry, DENY
 ```
 
@@ -539,25 +539,25 @@ Decision: BLOCK (malicious domain)
 Combines **all firewall types** plus advanced features:
 
 **Features:**
--  Stateful inspection
--  Application awareness
--  Intrusion Prevention System (IPS)
--  Deep Packet Inspection (DPI)
--  Threat intelligence integration
--  SSL/TLS inspection
--  User identity awareness
--  Advanced malware protection
+-  Stateful inspection
+-  Application awareness
+-  Intrusion Prevention System (IPS)
+-  Deep Packet Inspection (DPI)
+-  Threat intelligence integration
+-  SSL/TLS inspection
+-  User identity awareness
+-  Advanced malware protection
 
 **Example Scenario:**
 ```
 User tries to download file:
 
-1. Stateful check: Connection valid? 
-2. Application check: Is it really HTTP? 
-3. IPS check: Contains exploit code?  BLOCK
-4. Threat intel: Domain on blacklist?  BLOCK
-5. Malware scan: File signature matches virus?  BLOCK
-6. User policy: Is user allowed to download .exe?  BLOCK
+1. Stateful check: Connection valid? 
+2. Application check: Is it really HTTP? 
+3. IPS check: Contains exploit code?  BLOCK
+4. Threat intel: Domain on blacklist?  BLOCK
+5. Malware scan: File signature matches virus?  BLOCK
+6. User policy: Is user allowed to download .exe?  BLOCK
 ```
 
 **Popular NGFW Solutions:**
@@ -579,26 +579,26 @@ Every firewall rule contains:
 [Action] [Protocol] [Source] [Destination] [Port] [Options]
 
 Example:
-ALLOW TCP 192.168.1.0/24 í ANY:443
-DENY  TCP ANY í 192.168.1.100:23
-ALLOW UDP ANY í ANY:53
+ALLOW TCP 192.168.1.0/24 ? ANY:443
+DENY  TCP ANY ? 192.168.1.100:23
+ALLOW UDP ANY ? ANY:53
 ```
 
 #### Rule Evaluation Order
 
-=® **Critical:** Firewalls evaluate rules **from top to bottom**, **first match wins!**
+=? **Critical:** Firewalls evaluate rules **from top to bottom**, **first match wins!**
 
 **Example 1 - Order Matters:**
 ```
 Rule 1: DENY ALL
-Rule 2: ALLOW 192.168.1.10 í ANY:80
+Rule 2: ALLOW 192.168.1.10 ? ANY:80
 
 Result: Everything blocked (Rule 1 matches first)
 ```
 
 **Example 2 - Correct Order:**
 ```
-Rule 1: ALLOW 192.168.1.10 í ANY:80
+Rule 1: ALLOW 192.168.1.10 ? ANY:80
 Rule 2: DENY ALL
 
 Result: 192.168.1.10 can access port 80, everything else blocked
@@ -634,7 +634,7 @@ L NOT RECOMMENDED
 Block everything by default
 Only allow what's explicitly needed
 
- RECOMMENDED - "Principle of Least Privilege"
+ RECOMMENDED - "Principle of Least Privilege"
 - More secure
 - Easier to audit
 - Best practice
@@ -667,12 +667,12 @@ Rule 5: DENY ALL (default policy)
 # Attacker scans port 22
 
 DENY action:
-Attacker: SYN í Port 22
+Attacker: SYN ? Port 22
 Firewall: RST (connection refused)
 Attacker knows: Service exists but blocked
 
 DROP action:
-Attacker: SYN í Port 22
+Attacker: SYN ? Port 22
 Firewall: (silence)
 Attacker knows: Nothing (timeout)
 ```
@@ -1153,12 +1153,12 @@ Remove-NetFirewallRule -DisplayGroup "My Custom Rules"
 #### GUI Management (Windows Defender Firewall)
 
 **Access:**
-1. Windows Security í Firewall & network protection
+1. Windows Security ? Firewall & network protection
 2. Or: `wf.msc` (Advanced Firewall console)
 
 **Creating Rules:**
-1. Windows Defender Firewall í Advanced Settings
-2. Inbound Rules í New Rule
+1. Windows Defender Firewall ? Advanced Settings
+2. Inbound Rules ? New Rule
 3. Select rule type:
    - **Port**: Control access by port number
    - **Program**: Control specific application
@@ -1233,8 +1233,8 @@ Get-WinEvent -LogName "Microsoft-Windows-Windows Firewall With Advanced Security
 
 #### Scenario 1: Public WiFi (Unencrypted)
 ```
-Your Laptop  í  [CafÈ WiFi - Unencrypted]  í  Bank Website
-     ë                   ë
+Your Laptop  ?  [Caf? WiFi - Unencrypted]  ?  Bank Website
+     ?                   ?
 Passwords     Attacker can intercept
 transmitted   and see everything!
 in plain text
@@ -1242,8 +1242,8 @@ in plain text
 
 #### Scenario 2: Privacy Concerns
 ```
-Your Computer  í  [ISP - Can see everything]  í  Websites
-                         ë
+Your Computer  ?  [ISP - Can see everything]  ?  Websites
+                         ?
                   - Tracks browsing
                   - Logs all activity
                   - Can sell data
@@ -1251,8 +1251,8 @@ Your Computer  í  [ISP - Can see everything]  í  Websites
 
 #### Scenario 3: Remote Work
 ```
-Home Worker  í  [Public Internet - Unsafe]  í  Corporate Network
-    ë                                               ë
+Home Worker  ?  [Public Internet - Unsafe]  ?  Corporate Network
+    ?                                               ?
 Can't access                              Sensitive resources
 internal resources
 ```
@@ -1263,8 +1263,8 @@ internal resources
 
 #### With VPN - Encrypted Tunnel
 ```
-Your Computer  í  [Encrypted VPN Tunnel]  í  VPN Server  í  Internet
-     ë                      ë                    ë
+Your Computer  ?  [Encrypted VPN Tunnel]  ?  VPN Server  ?  Internet
+     ?                      ?                    ?
   All data         ISP can't see         VPN's IP shown,
  encrypted        what you're doing      not yours
 ```
@@ -1291,27 +1291,27 @@ VPN Server: "Okay, let's authenticate"
 ```
 Your Device: Sends credentials (username/password or certificate)
 VPN Server: Verifies credentials
-Result: Authenticated 
+Result: Authenticated 
 ```
 
 **3. Tunnel Establishment**
 ```
-Your Device êí VPN Server: Negotiate encryption
+Your Device ?? VPN Server: Negotiate encryption
 - Encryption algorithm (AES-256)
 - Key exchange (Diffie-Hellman)
 - Authentication method (SHA-256)
 
-Result: Secure tunnel created =
+Result: Secure tunnel created =
 ```
 
 **4. Encapsulation**
 ```
 Original Packet:
-[Your IP: 192.168.1.10] í [Google: 142.250.185.46] [Data: "search query"]
+[Your IP: 192.168.1.10] ? [Google: 142.250.185.46] [Data: "search query"]
 
 VPN Encapsulation (adds layers):
-[Your IP] í [VPN Server IP] [ENCRYPTED: original packet]
-                               ë
+[Your IP] ? [VPN Server IP] [ENCRYPTED: original packet]
+                               ?
                         AES-256 encrypted
 ```
 
@@ -1320,14 +1320,14 @@ VPN Encapsulation (adds layers):
 VPN Server receives encrypted packet
 Decrypts it
 Sends original packet to destination:
-[VPN Server IP: 203.0.113.5] í [Google: 142.250.185.46] [Data: "search query"]
+[VPN Server IP: 203.0.113.5] ? [Google: 142.250.185.46] [Data: "search query"]
 
 Google sees VPN server's IP, not your real IP!
 ```
 
 **6. Response Path (Reverse)**
 ```
-Google í VPN Server í Encrypt í Your Device í Decrypt
+Google ? VPN Server ? Encrypt ? Your Device ? Decrypt
 ```
 
 ---
@@ -1339,7 +1339,7 @@ Google í VPN Server í Encrypt í Your Device í Decrypt
 Individual users connect to a private network from remote location.
 
 ```
-Home Worker  í  [VPN Tunnel]  í  Corporate VPN Gateway  í  Corporate LAN
+Home Worker  ?  [VPN Tunnel]  ?  Corporate VPN Gateway  ?  Corporate LAN
    (Home)       [Internet]            (Office)              (Resources)
 ```
 
@@ -1351,9 +1351,9 @@ Home Worker  í  [VPN Tunnel]  í  Corporate VPN Gateway  í  Corporate LAN
 
 **Topology:**
 ```
-Employee 1 (Home)    
-Employee 2 (CafÈ)     í [VPN Server] í Corporate Network
-Employee 3 (Airport)                   - File servers
+Employee 1 (Home)    
+Employee 2 (Caf?)     ? [VPN Server] ? Corporate Network
+Employee 3 (Airport)                   - File servers
                                         - Databases
                                         - Internal apps
 ```
@@ -1365,7 +1365,7 @@ Employee 3 (Airport)                   - File servers
 Connects entire networks together (office to office).
 
 ```
-Office A Network  êí  [VPN Tunnel]  êí  Office B Network
+Office A Network  ??  [VPN Tunnel]  ??  Office B Network
   192.168.1.0/24       [Internet]         10.0.0.0/24
 ```
 
@@ -1378,8 +1378,8 @@ Office A Network  êí  [VPN Tunnel]  êí  Office B Network
 **Topology:**
 ```
 New York Office          VPN Tunnel          London Office
-192.168.1.0/24      ê              í      10.0.0.0/24
-                                               
+192.168.1.0/24      ??      10.0.0.0/24
+                                               
   50 users                                  30 users
   File server                            Database server
 ```
@@ -1397,7 +1397,7 @@ New York Office          VPN Tunnel          London Office
 Similar to remote access, but emphasizes single device accessing network.
 
 ```
-Your Laptop í VPN Client í Corporate Network
+Your Laptop ? VPN Client ? Corporate Network
 ```
 
 ---
@@ -1407,7 +1407,7 @@ Your Laptop í VPN Client í Corporate Network
 Access via web browser, no client software needed.
 
 ```
-Your Browser í HTTPS í SSL VPN Portal í Corporate Apps
+Your Browser ? HTTPS ? SSL VPN Portal ? Corporate Apps
                       (e.g., portal.company.com)
 ```
 
@@ -1540,7 +1540,7 @@ sudo wg-quick down wg0
 **Use Case - Site-to-Site:**
 ```
 Office A Router          IPSec Tunnel          Office B Router
- (10.0.1.0/24)      ê              í       (10.0.2.0/24)
+ (10.0.1.0/24)      ??       (10.0.2.0/24)
 ```
 
 ---
@@ -1702,7 +1702,7 @@ sudo systemctl enable wg-quick@wg0
 
 ### VPN Security Considerations
 
-####  VPN Benefits:
+####  VPN Benefits:
 
 1. **Encryption**: All traffic encrypted (AES-256)
 2. **Privacy**: Hides IP and location
@@ -1710,7 +1710,7 @@ sudo systemctl enable wg-quick@wg0
 4. **Integrity**: Prevents tampering with data
 5. **Bypass Censorship**: Access blocked content
 
-#### † VPN Limitations:
+#### ? VPN Limitations:
 
 1. **Trust Required**: VPN provider can see your traffic
 2. **Not Anonymous**: VPN knows your real IP
@@ -1718,11 +1718,11 @@ sudo systemctl enable wg-quick@wg0
 4. **Speed Reduction**: Encryption adds overhead (10-30% slower)
 5. **Single Point of Failure**: If VPN compromised, all traffic exposed
 
-#### =· VPN Best Practices:
+#### =? VPN Best Practices:
 
 **1. Choose Strong Protocols**
 ```
- WireGuard, OpenVPN, IKEv2
+ WireGuard, OpenVPN, IKEv2
 L PPTP (broken), L2TP/IPSec (NSA backdoor concerns)
 ```
 
@@ -1770,7 +1770,7 @@ curl ifconfig.me  # Should show VPN IP
 
 | Feature | VPN | Proxy | Tor |
 |---------|-----|-------|-----|
-| **Encryption** |  Full | L Usually none |  Multi-layer |
+| **Encryption** |  Full | L Usually none |  Multi-layer |
 | **Speed** | PPPP | PPPPP | P (Very slow) |
 | **Privacy** | PPPP | PP | PPPPP |
 | **Anonymity** | PP | P | PPPPP |
@@ -1785,22 +1785,22 @@ curl ifconfig.me  # Should show VPN IP
 ### Complete Device Hierarchy
 
 ```
-                                                     
-  OSI Layer 7 (Application)                          
-  - Gateway, Proxy Server, Load Balancer             
-                                                     $
-  OSI Layer 4-6 (Transport/Session/Presentation)     
-  - Firewall (NGFW), Load Balancer                   
-                                                     $
-  OSI Layer 3 (Network)                              
-  - Router, Layer 3 Switch, Multilayer Switch        
-                                                     $
-  OSI Layer 2 (Data Link)                            
-  - Switch, Bridge, Wireless Access Point (WAP)      
-                                                     $
-  OSI Layer 1 (Physical)                             
-  - Hub, Repeater, Modem, Cables                     
-                                                     
+
+  OSI Layer 7 (Application)                          
+  - Gateway, Proxy Server, Load Balancer             
+$
+  OSI Layer 4-6 (Transport/Session/Presentation)     
+  - Firewall (NGFW), Load Balancer                   
+$
+  OSI Layer 3 (Network)                              
+  - Router, Layer 3 Switch, Multilayer Switch        
+$
+  OSI Layer 2 (Data Link)                            
+  - Switch, Bridge, Wireless Access Point (WAP)      
+$
+  OSI Layer 1 (Physical)                             
+  - Hub, Repeater, Modem, Cables                     
+
 ```
 
 ---
@@ -1813,7 +1813,7 @@ curl ifconfig.me  # Should show VPN IP
 
 ```
       [HUB]
-       <   
+    <
    PC1 PC2 PC3
 
 PC1 sends to PC2:
@@ -1828,8 +1828,8 @@ Hub broadcasts to ALL ports (including PC3)
 
 **Example Collision:**
 ```
-PC1 sends data í Hub í Broadcasts to all
-PC3 sends data í Hub í COLLISION! Both transmissions corrupted
+PC1 sends data ? Hub ? Broadcasts to all
+PC3 sends data ? Hub ? COLLISION! Both transmissions corrupted
 ```
 
 **Modern Alternative:** **Use switches instead!**
@@ -1841,7 +1841,7 @@ PC3 sends data í Hub í COLLISION! Both transmissions corrupted
 **Function:** Amplifies/regenerates signals to extend cable distance
 
 ```
-Device A     50m     [Repeater]     50m     Device B
+Device A  50m  [Repeater]  50m  Device B
                     (regenerates signal)
 ```
 
@@ -1865,22 +1865,22 @@ Device A     50m     [Repeater]     50m     Device B
 
 **Cable Modem:**
 ```
-ISP (Coax Cable)  í  [Cable Modem]  í  Ethernet  í  Router
+ISP (Coax Cable)  ?  [Cable Modem]  ?  Ethernet  ?  Router
 ```
 
 **DSL Modem:**
 ```
-ISP (Phone Line)  í  [DSL Modem]  í  Ethernet  í  Router
+ISP (Phone Line)  ?  [DSL Modem]  ?  Ethernet  ?  Router
 ```
 
 **Fiber ONT (Optical Network Terminal):**
 ```
-ISP (Fiber Optic)  í  [ONT]  í  Ethernet  í  Router
+ISP (Fiber Optic)  ?  [ONT]  ?  Ethernet  ?  Router
 ```
 
 **Modern Setup:**
 ```
-ISP  í  Modem  í  Router  í  Switch  í  Devices
+ISP  ?  Modem  ?  Router  ?  Switch  ?  Devices
 ```
 
 ---
@@ -1896,7 +1896,7 @@ ISP  í  Modem  í  Router  í  Switch  í  Devices
 **1. Learning Phase:**
 ```
         [Switch]
-         <     
+    <
    PC1   PC2   PC3
 
 PC1 (MAC: AA:AA) sends frame
@@ -1920,10 +1920,10 @@ Switch checks MAC table:
 ```
 
 **Advantages over Hub:**
--  **No collisions** (full-duplex)
--  **Better security** (traffic not visible to all)
--  **Higher performance** (dedicated bandwidth per port)
--  **Intelligent** (learns MAC addresses)
+-  **No collisions** (full-duplex)
+-  **Better security** (traffic not visible to all)
+-  **Higher performance** (dedicated bandwidth per port)
+-  **Intelligent** (learns MAC addresses)
 
 **Switch Types:**
 
@@ -1942,13 +1942,13 @@ Switch checks MAC table:
 **Function:** Connects two network segments, filters traffic between them
 
 ```
-Segment A  êí  [Bridge]  êí  Segment B
+Segment A  ??  [Bridge]  ??  Segment B
 ```
 
 **Use Case:**
 - Extend network distance
 - Reduce collision domains
-- Connect different media types (Ethernet î WiFi)
+- Connect different media types (Ethernet ? WiFi)
 
 **Modern Usage:**
 - Mostly replaced by switches
@@ -1961,7 +1961,7 @@ Segment A  êí  [Bridge]  êí  Segment B
 **Function:** Provides WiFi connectivity, bridges wireless to wired network
 
 ```
-Wired Network  í  [WAP]  í  WiFi Devices
+Wired Network  ?  [WAP]  ?  WiFi Devices
     (Switch)              (Laptops, phones)
 ```
 
@@ -1969,14 +1969,14 @@ Wired Network  í  [WAP]  í  WiFi Devices
 
 **Standalone Mode:**
 ```
-Internet í Router í Switch í WAP í WiFi Clients
+Internet ? Router ? Switch ? WAP ? WiFi Clients
 ```
 
 **Controller-Based (Enterprise):**
 ```
-Internet í Router í WiFi Controller
-                       ì
-                      <       
+Internet ? Router ? WiFi Controller
+                       ?
+               <
               WAP1   WAP2   WAP3
 ```
 
@@ -1998,7 +1998,7 @@ Internet í Router í WiFi Controller
 ```
 Internet (WAN)          Router          Home Network (LAN)
 203.0.113.5                             192.168.1.0/24
-     ë                    ì                    ì
+     ?                    ?                    ?
 Public IP          [Routing Table]      Private IPs
 ```
 
@@ -2021,22 +2021,22 @@ Router checks routing table:
 
 **Router Functions:**
 1. **Routing**: Forward packets between networks
-2. **NAT**: Translate private î public IPs
+2. **NAT**: Translate private ? public IPs
 3. **Firewall**: Filter traffic
 4. **DHCP**: Assign IP addresses
 5. **DNS**: Resolve domain names (some routers)
 
 **Home Router Typical Features:**
 ```
-                            
-  Consumer Router            
-                            $
-  - 4-port switch            
-  - WiFi access point        
-  - Router (NAT, routing)    
-  - Firewall (basic)         
-  - DHCP server              
-                            
+
+  Consumer Router            
+$
+  - 4-port switch            
+  - WiFi access point        
+  - Router (NAT, routing)    
+  - Firewall (basic)         
+  - DHCP server              
+
 ```
 
 ---
@@ -2053,11 +2053,11 @@ Router checks routing table:
 **Use Case - Inter-VLAN Routing:**
 ```
         [Layer 3 Switch]
-             <         
+    <
   VLAN 10   VLAN 20   VLAN 30
   (Sales)   (Eng)     (HR)
 
-Sales PC (VLAN 10) í Engineering Server (VLAN 20)
+Sales PC (VLAN 10) ? Engineering Server (VLAN 20)
 Switch routes between VLANs internally (fast!)
 ```
 
@@ -2079,8 +2079,8 @@ Use: Layer 3 switch = internal routing (between VLANs)
 **Function:** Intermediary between clients and internet
 
 ```
-Client  í  Proxy Server  í  Internet
-             ì
+Client  ?  Proxy Server  ?  Internet
+             ?
          - Caching
          - Filtering
          - Logging
@@ -2090,8 +2090,8 @@ Client  í  Proxy Server  í  Internet
 
 **Forward Proxy (Client-side):**
 ```
-Company employees í Proxy í Internet
-                    ì
+Company employees ? Proxy ? Internet
+                    ?
               - Block social media
               - Cache websites
               - Log activity
@@ -2099,8 +2099,8 @@ Company employees í Proxy í Internet
 
 **Reverse Proxy (Server-side):**
 ```
-Internet users í Reverse Proxy í Web Servers
-                      ì
+Internet users ? Reverse Proxy ? Web Servers
+                      ?
                 - Load balancing
                 - SSL termination
                 - Caching
@@ -2118,25 +2118,25 @@ Internet users í Reverse Proxy í Web Servers
 **Function:** Distributes traffic across multiple servers
 
 ```
-Internet  í  [Load Balancer]  í  Web Server 1
-                   ì           í  Web Server 2
-                Distributes    í  Web Server 3
+Internet  ?  [Load Balancer]  ?  Web Server 1
+                   ?           ?  Web Server 2
+                Distributes    ?  Web Server 3
 ```
 
 **Algorithms:**
 
 **1. Round Robin:**
 ```
-Request 1 í Server 1
-Request 2 í Server 2
-Request 3 í Server 3
-Request 4 í Server 1 (repeat)
+Request 1 ? Server 1
+Request 2 ? Server 2
+Request 3 ? Server 3
+Request 4 ? Server 1 (repeat)
 ```
 
 **2. Least Connections:**
 ```
 Server 1: 10 connections
-Server 2: 5 connections  ê Send here (least busy)
+Server 2: 5 connections  ? Send here (least busy)
 Server 3: 8 connections
 ```
 
@@ -2149,7 +2149,7 @@ Maintains session persistence
 **Health Checks:**
 ```
 Load Balancer pings servers every 5 seconds
-Server 2 fails to respond í Mark as down
+Server 2 fails to respond ? Mark as down
 Route traffic only to Server 1 and 3
 ```
 
@@ -2169,13 +2169,13 @@ Route traffic only to Server 1 and 3
 
 **VoIP Gateway:**
 ```
-Traditional Phone (PSTN) í Gateway í VoIP Network (SIP)
+Traditional Phone (PSTN) ? Gateway ? VoIP Network (SIP)
 ```
 
 **Email Gateway:**
 ```
-Internal Email í Gateway í Internet Email
-                   ì
+Internal Email ? Gateway ? Internet Email
+                   ?
               - Spam filtering
               - Virus scanning
               - Encryption
@@ -2183,7 +2183,7 @@ Internal Email í Gateway í Internet Email
 
 **IoT Gateway:**
 ```
-Zigbee/Z-Wave Devices í Gateway í WiFi/Ethernet Network
+Zigbee/Z-Wave Devices ? Gateway ? WiFi/Ethernet Network
 ```
 
 ---
@@ -2193,48 +2193,48 @@ Zigbee/Z-Wave Devices í Gateway í WiFi/Ethernet Network
 #### Small Office Network:
 ```
 Internet
-   ì
+   ?
 [Modem]
-   ì
+   ?
 [Router + Firewall]
-   ì
+   ?
 [PoE Switch]
-   ì
-  <  ,      ,     
+   ?
+<,,
 WAP PC IP-Phone Camera
 ```
 
 #### Enterprise Network:
 ```
 Internet
-   ì
+   ?
 [Firewall]
-   ì
+   ?
 [Core Layer 3 Switch]
-   ì
-          <          
+   ?
+<
 [Distribution Layer Switches]
-   ì            ì
+   ?            ?
 [Access Switches]
-   ì
+   ?
 End Devices (PCs, Phones, Printers)
 ```
 
 #### Data Center:
 ```
 Internet
-   ì
+   ?
 [Load Balancer]
-   ì
-         <         
+   ?
+<
 [Web Tier Servers]
-   ì
+   ?
 [App Tier Load Balancer]
-   ì
+   ?
 [Application Servers]
-   ì
+   ?
 [Database Load Balancer]
-   ì
+   ?
 [Database Cluster]
 ```
 
@@ -2248,7 +2248,7 @@ Internet
 |--------|----------------|-----|
 | **Security** | Low (direct exposure) | High (encrypted tunnel) |
 | **Use Case** | Single service | Full network access |
-| **Encryption** | L No |  Yes |
+| **Encryption** | L No |  Yes |
 | **Setup** | Easy (router config) | Moderate (server + client) |
 | **Recommended For** | Public services (web server) | Remote secure access |
 
@@ -2256,8 +2256,8 @@ Internet
 
 | Policy | Security | Approach | Recommendation |
 |--------|----------|----------|----------------|
-| **Default Allow** | † Low | Blacklist (block bad) | L Not recommended |
-| **Default Deny** | =· High | Whitelist (allow good) |  Recommended |
+| **Default Allow** | ? Low | Blacklist (block bad) | L Not recommended |
+| **Default Deny** | =? High | Whitelist (allow good) |  Recommended |
 
 ### VPN Protocols
 
@@ -2273,10 +2273,10 @@ Internet
 | Device | Layer | Intelligence | Use |
 |--------|-------|--------------|-----|
 | **Hub** | 1 | None (dumb repeater) | L Obsolete |
-| **Switch** | 2 | MAC address learning |  Connect devices |
-| **Router** | 3 | IP routing, NAT |  Connect networks |
-| **Firewall** | 3-7 | Traffic filtering |  Security |
-| **Load Balancer** | 4-7 | Traffic distribution |  Scale services |
+| **Switch** | 2 | MAC address learning |  Connect devices |
+| **Router** | 3 | IP routing, NAT |  Connect networks |
+| **Firewall** | 3-7 | Traffic filtering |  Security |
+| **Load Balancer** | 4-7 | Traffic distribution |  Scale services |
 
 ---
 
